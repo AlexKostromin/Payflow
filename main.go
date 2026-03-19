@@ -125,6 +125,7 @@ func (s *Server) getPayment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	slog.Info("payment fetched", "id", p.ID)
 	writeJSON(w, 200, p)
 }
 
@@ -136,7 +137,7 @@ func main() {
 	// DSN для подключения к PostgreSQL: берём из переменной окружения или используем дефолт
 	dsn := os.Getenv("DB_DSN")
 	if dsn == "" {
-		dsn = "postgres://postgres:postgres@localhost:5432/payflow?sslmode=disable"
+		dsn = "postgres://postgres:secret@localhost:5432/payflow?sslmode=disable"
 	}
 
 	// Создаём пул соединений к БД
